@@ -598,3 +598,6 @@ footer {
     .topbar, footer, .hero-actions, .stamp-badge { display: none; }
     body { background: white; }
 }
+
+.investigate-item { padding: 10px; border-radius: 5px; transition: 0.3s ease; }
+.investigate-item:hover { background: rgba(255,255,255,0.1); }
