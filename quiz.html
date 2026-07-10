@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberAware Quiz</title>
+
+<nav>
+
+<div class="logo">
+CyberAware
+</div>
+
+<ul>
+<li><a href="index.html">🏠 Home</a></li>
+<li><a href="quiz.html">📝 Quiz</a></li>
+<li><a href="phishing.html">🎣 Phishing</a></li>
+<li><a href="checker.html">🔐 Password</a></li>
+<li><a href="artikel.html">📚 Artikel</a></li>
+<li><a href="tips.html">💡 Tips</a></li>
+</ul>
+
+</nav>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f7fb;
+    padding:20px;
+}
+
+.container{
+    max-width:800px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.progress{
+    width:100%;
+    height:20px;
+    background:#ddd;
+    border-radius:10px;
+    overflow:hidden;
+    margin-bottom:20px;
+}
+
+.progress-bar{
+    height:100%;
+    width:0%;
+    background:#2563eb;
+}
+
+.option{
+    display:block;
+    margin:10px 0;
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button{
+    margin-top:20px;
+    padding:10px 20px;
+    border:none;
+    background:#2563eb;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+#result{
+    text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Cyber Security Quiz</h1>
+
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div id="quiz"></div>
+
+<div id="result"></div>
+
+</div>
+
+<script src="js/quiz.js"></script>
+<link rel="stylesheet" href="css/style.css">
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Password Strength Checker</title>
+
+<nav>
+
+<div class="logo">
+CyberAware
+</div>
+
+<ul>
+<li><a href="index.html">🏠 Home</a></li>
+<li><a href="quiz.html">📝 Quiz</a></li>
+<li><a href="phishing.html">🎣 Phishing</a></li>
+<li><a href="checker.html">🔐 Password</a></li>
+<li><a href="artikel.html">📚 Artikel</a></li>
+<li><a href="tips.html">💡 Tips</a></li>
+</ul>
+
+</nav>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f7fb;
+    padding:20px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+input{
+    width:100%;
+    padding:12px;
+    font-size:16px;
+    margin-top:10px;
+}
+
+.bar{
+    width:100%;
+    height:20px;
+    background:#ddd;
+    border-radius:10px;
+    margin-top:15px;
+    overflow:hidden;
+}
+
+.bar-fill{
+    height:100%;
+    width:0%;
+    transition:0.3s;
+}
+
+#result{
+    margin-top:15px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+ul{
+    margin-top:15px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>🔐 Password Strength Checker</h1>
+
+<p>Masukkan password untuk mengecek tingkat keamanannya.</p>
+
+<input
+type="password"
+id="password"
+placeholder="Masukkan password..."
+>
+
+<div class="bar">
+    <div class="bar-fill" id="barFill"></div>
+</div>
+
+<div id="result"></div>
+
+<ul>
+<li>Minimal 8 karakter</li>
+<li>Huruf besar (A-Z)</li>
+<li>Huruf kecil (a-z)</li>
+<li>Angka (0-9)</li>
+<li>Simbol (!@#$%^&*)</li>
+</ul>
+
+</div>
+
+<script src="js/checker.js"></script>
+<link rel="stylesheet" href="css/style.css">
+
+</body>
+</html>

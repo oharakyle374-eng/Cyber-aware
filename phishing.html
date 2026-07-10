@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulasi Phishing</title>
+
+<nav>
+
+<div class="logo">
+CyberAware
+</div>
+
+<ul>
+<li><a href="index.html">🏠 Home</a></li>
+<li><a href="quiz.html">📝 Quiz</a></li>
+<li><a href="phishing.html">🎣 Phishing</a></li>
+<li><a href="checker.html">🔐 Password</a></li>
+<li><a href="artikel.html">📚 Artikel</a></li>
+<li><a href="tips.html">💡 Tips</a></li>
+</ul>
+
+</nav>
+
+<style>
+    
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f7fb;
+    padding:20px;
+}
+
+.container{
+    max-width:800px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.email-box{
+    border-left:5px solid #2563eb;
+    padding:20px;
+    border-radius:10px;
+    margin:20px 0;
+    background:#f8fafc;
+    box-shadow:0 3px 8px rgba(0,0,0,0.1);
+}
+
+button{
+    padding:10px 20px;
+    margin:5px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.safe{
+    background:#16a34a;
+    color:white;
+}
+
+.correct-box{
+    background:#dcfce7;
+    border-left:5px solid #16a34a;
+    padding:15px;
+    border-radius:8px;
+}
+
+.wrong-box{
+    background:#fee2e2;
+    border-left:5px solid #dc2626;
+    padding:15px;
+    border-radius:8px;
+}
+
+.phishing{
+    background:#dc2626;
+    color:white;
+}
+
+.next{
+    background:#2563eb;
+    color:white;
+}
+
+#feedback{
+    margin-top:20px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>🎣 Simulasi Phishing</h1>
+
+<p>Tentukan apakah email berikut Aman atau Phishing.</p>
+
+<p id="progress"></p>
+
+<div id="content"></div>
+
+<div id="feedback"></div>
+
+</div>
+
+<script src="js/phishing.js"></script>
+<link rel="stylesheet" href="css/style.css">
+
+</body>
+</html>
+
