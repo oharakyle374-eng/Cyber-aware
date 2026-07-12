@@ -1,115 +1,370 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simulasi Phishing</title>
-
-<nav>
-
-<div class="logo">
-CyberAware
-</div>
-
-<ul>
-<li><a href="index.html">🏠 Home</a></li>
-<li><a href="quiz.html">📝 Quiz</a></li>
-<li><a href="phishing.html">🎣 Phishing</a></li>
-<li><a href="checker.html">🔐 Password</a></li>
-<li><a href="artikel.html">📚 Artikel</a></li>
-</ul>
-
-</nav>
-
-<style>
-    
-body{
-    font-family:Arial,sans-serif;
-    background:#f4f7fb;
-    padding:20px;
-}
-
-.container{
-    max-width:800px;
-    margin:auto;
-    background:white;
-    padding:30px;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
-}
-
-.email-box{
-    border-left:5px solid #2563eb;
-    padding:20px;
-    border-radius:10px;
-    margin:20px 0;
-    background:#f8fafc;
-    box-shadow:0 3px 8px rgba(0,0,0,0.1);
-}
-
-button{
-    padding:10px 20px;
-    margin:5px;
-    border:none;
-    border-radius:5px;
-    cursor:pointer;
-}
-
-.safe{
-    background:#16a34a;
-    color:white;
-}
-
-.correct-box{
-    background:#dcfce7;
-    border-left:5px solid #16a34a;
-    padding:15px;
-    border-radius:8px;
-}
-
-.wrong-box{
-    background:#fee2e2;
-    border-left:5px solid #dc2626;
-    padding:15px;
-    border-radius:8px;
-}
-
-.phishing{
-    background:#dc2626;
-    color:white;
-}
-
-.next{
-    background:#2563eb;
-    color:white;
-}
-
-#feedback{
-    margin-top:20px;
-}
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <title>CyberAware - Phishing Simulator</title>
+    <!-- LINK CSS GLOBAL (harus di head) -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- NAVBAR -->
+    <nav>
+        <div class="navbar-wrapper">
+            <a href="index.html" class="navbar-logo">
+                <span>🔐</span>
+                <span class="navbar-logo-text">CyberAware</span>
+            </a>
 
-<div class="container">
+            <button class="navbar-toggle" id="navbarToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
-<h1>🎣 Simulasi Phishing</h1>
+            <ul class="navbar-menu" id="navbarMenu">
+                <li class="navbar-item">
+                    <a href="index.html" class="navbar-link">
+                        <span>🏠</span>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="quiz.html" class="navbar-link">
+                        <span>📝</span>
+                        <span>Quiz</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="phishing.html" class="navbar-link active">
+                        <span>🎣</span>
+                        <span>Phishing</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="checker.html" class="navbar-link">
+                        <span>🔐</span>
+                        <span>Password</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-<p>Tentukan apakah email berikut Aman atau Phishing.</p>
+    <!-- PHISHING SIMULATOR -->
+    <div class="phishing-container">
+        <div id="simulator-content"></div>
+    </div>
 
-<p id="progress"></p>
+    <!-- NAVBAR TOGGLE SCRIPT -->
+    <script>
+        // Hamburger menu toggle
+        const navbarToggle = document.getElementById('navbarToggle');
+        const navbarMenu = document.getElementById('navbarMenu');
 
-<div id="content"></div>
+        navbarToggle.addEventListener('click', () => {
+            navbarToggle.classList.toggle('active');
+            navbarMenu.classList.toggle('active');
+        });
 
-<div id="feedback"></div>
+        document.querySelectorAll('.navbar-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navbarToggle.classList.remove('active');
+                navbarMenu.classList.remove('active');
+            });
+        });
 
-</div>
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('nav')) {
+                navbarToggle.classList.remove('active');
+                navbarMenu.classList.remove('active');
+            }
+        });
+    </script>
 
-<script src="js/phishing.js"></script>
-<link rel="stylesheet" href="css/style.css">
+    <!-- PHISHING SIMULATOR LOGIC -->
+    <script>
+        // Data Email Phishing
+        const phishingEmails = [
+            {
+                id: 1,
+                sender: "no-reply@paypa1.com",
+                subject: "Verifikasi Akun Paypal Anda",
+                body: "Akun Anda telah diakses dari lokasi yang tidak dikenal. Klik tombol di bawah untuk memverifikasi identitas Anda segera.",
+                linkText: "Verifikasi Sekarang",
+                isPhishing: true,
+                redFlags: [
+                    "Domain email yang mirip (paypa1.com bukan paypal.com)",
+                    "Urgensi tinggi dengan ancaman akses tidak sah",
+                    "Meminta verifikasi dengan link",
+                    "Tidak menyebutkan nama pengguna secara spesifik"
+                ],
+                tips: [
+                    "Selalu cek domain email dengan hati-hati",
+                    "Paypal tidak pernah meminta verifikasi melalui link email",
+                    "Pergi langsung ke website resmi untuk verifikasi"
+                ]
+            },
+            {
+                id: 2,
+                sender: "support@bank-nasional.co.id",
+                subject: "Update Keamanan - Aktivasi 2FA",
+                body: "Kami merekomendasikan untuk mengaktifkan autentikasi dua faktor untuk keamanan akun Anda. Prosesnya mudah dan hanya membutuhkan 2 menit.",
+                linkText: "Aktivasi 2FA",
+                isPhishing: false,
+                redFlags: [],
+                tips: [
+                    "Email ini terlihat legitimate dengan domain bank yang benar",
+                    "Menawarkan fitur keamanan tambahan (2FA)",
+                    "Tidak ada urgensi atau ancaman",
+                    "Bahasa profesional dan tidak meminta data sensitif langsung"
+                ]
+            },
+            {
+                id: 3,
+                sender: "admin@amazn-rewards.com",
+                subject: "Anda Menang Amazon Gift Card Senilai Rp 1.000.000!",
+                body: "Selamat! Anda adalah pemenang undian mingguan kami. Klik tombol di bawah untuk mengklaim hadiah Anda sebelum terjual habis.",
+                linkText: "Klaim Hadiah",
+                isPhishing: true,
+                redFlags: [
+                    "Domain yang mirip tapi salah (amazn-rewards bukan amazon)",
+                    "Penawaran hadiah yang tiba-tiba tanpa partisipasi",
+                    "Urgensi tinggi ('sebelum terjual habis')",
+                    "Meminta klik untuk mengklaim tanpa verifikasi"
+                ],
+                tips: [
+                    "Jangan pernah klik link dari email hadiah yang tidak diminta",
+                    "Verifikasi melalui website resmi",
+                    "Hadiah legitimate tidak pernah dikirim melalui email",
+                    "Selalu curigai hadiah yang tidak Anda ikuti"
+                ]
+            },
+            {
+                id: 4,
+                sender: "noreply@google.com",
+                subject: "Aktivitas Login Mencurigakan di Akun Google Anda",
+                body: "Kami mendeteksi aktivitas login mencurigakan di akun Anda dari lokasi yang tidak dikenal. Jika ini bukan Anda, segera amankan akun Anda.",
+                linkText: "Amankan Akun",
+                isPhishing: false,
+                redFlags: [],
+                tips: [
+                    "Google mengirim notifikasi security yang legitimate",
+                    "Email ini menyediakan informasi spesifik tentang aktivitas",
+                    "Mendorong aksi keamanan yang proaktif",
+                    "Domain dari Google official (google.com)"
+                ]
+            },
+            {
+                id: 5,
+                sender: "admin@instagram-verifikasi.id",
+                subject: "Verifikasi Akun Instagram Anda Sekarang",
+                body: "Akun Instagram Anda perlu diverifikasi untuk keamanan. Jangan biarkan orang lain mengakses akun Anda. Verifikasi sekarang dengan mengklik tombol di bawah.",
+                linkText: "Verifikasi Instagram",
+                isPhishing: true,
+                redFlags: [
+                    "Domain tidak resmi (instagram-verifikasi.id bukan instagram.com)",
+                    "Menciptakan urgensi dan ketakutan",
+                    "Meminta aksi melalui link di email",
+                    "Bahasa yang tidak profesional"
+                ],
+                tips: [
+                    "Instagram tidak pernah meminta verifikasi melalui email link",
+                    "Perlu membuka app Instagram langsung untuk verifikasi",
+                    "Domain resmi Instagram adalah instagram.com",
+                    "Hati-hati dengan domain yang berakhir .id"
+                ]
+            }
+        ];
 
+        let currentEmailIndex = 0;
+        let correctAnswers = 0;
+        let totalAnswered = 0;
+
+        function displayPhishingEmail() {
+            const email = phishingEmails[currentEmailIndex];
+
+            const html = `
+                <div class="card mb-40">
+                    <div class="card-header">
+                        <h2 class="card-title">Email ${currentEmailIndex + 1} dari ${phishingEmails.length}</h2>
+                        <p class="card-subtitle">Analisis email ini: Apakah ini phishing atau legitimate?</p>
+                    </div>
+
+                    <div class="email-box">
+                        <div class="email-header">
+                            <div class="email-from">Dari:</div>
+                            <div class="email-sender">${email.sender}</div>
+                            <div class="email-subject">Subjek:</div>
+                            <div class="email-subject-text">${email.subject}</div>
+                        </div>
+                        <div class="email-body">
+                            ${email.body}
+                            <br><br>
+                            <a href="javascript:void(0)" class="email-link" onclick="answerPhishing(${email.id}, ${email.isPhishing})">
+                                ${email.linkText}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                            <button class="btn btn-danger" onclick="answerPhishing(${email.id}, true)">
+                                🚨 Ini Phishing
+                            </button>
+                            <button class="btn btn-success" onclick="answerPhishing(${email.id}, false)">
+                                ✓ Legitimate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('simulator-content').innerHTML = html;
+        }
+
+        function answerPhishing(id, userAnswer) {
+            const email = phishingEmails.find(e => e.id === id);
+            const isCorrect = userAnswer === email.isPhishing;
+
+            if (isCorrect) {
+                correctAnswers++;
+            }
+            totalAnswered++;
+
+            let resultHTML = `
+                <div class="card mb-40">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            ${isCorrect ? '✓ Jawaban Benar!' : '✗ Jawaban Salah'}
+                        </h2>
+                    </div>
+
+                    <div class="card-content">
+                        ${email.isPhishing ? `
+                            <div class="warning-box">
+                                <div class="warning-title">🚨 Ini adalah Email Phishing!</div>
+                                <p>Email ini dirancang untuk mencuri informasi pribadi atau mengelabui Anda ke website palsu.</p>
+                            </div>
+                        ` : `
+                            <div class="success-box">
+                                <div class="success-title">✓ Ini adalah Email Legitimate</div>
+                                <p>Email ini tampak asli dan aman untuk diklik. Namun tetap waspada!</p>
+                            </div>
+                        `}
+
+                        ${email.redFlags.length > 0 ? `
+                            <div style="margin-top: 24px;">
+                                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px;">🚩 Red Flags (Tanda Bahaya):</h3>
+                                <ul style="margin-left: 20px; line-height: 2;">
+                                    ${email.redFlags.map(flag => `<li>${flag}</li>`).join('')}
+                                </ul>
+                            </div>
+                        ` : `
+                            <div style="margin-top: 24px;">
+                                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px;">✓ Ciri-Ciri Email Legitimate:</h3>
+                                <ul style="margin-left: 20px; line-height: 2;">
+                                    ${email.tips.map(tip => `<li>${tip}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `}
+
+                        <div style="margin-top: 24px;">
+                            <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px;">💡 Tips & Pembelajaran:</h3>
+                            <ul style="margin-left: 20px; line-height: 2;">
+                                ${email.tips.map(tip => `<li>${tip}</li>`).join('')}
+                            </ul>
+                        </div>
+
+                        <div style="margin-top: 24px; padding: 16px; background: #fffbeb; border-radius: 12px; border-left: 4px solid #f59e0b;">
+                            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;">Skor Anda:</p>
+                            <p style="font-size: 24px; font-weight: 700; color: #f59e0b;">${correctAnswers} / ${totalAnswered}</p>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <button class="btn btn-primary" style="width: 100%;" onclick="nextEmail()">
+                            ${currentEmailIndex < phishingEmails.length - 1 ? 'Email Berikutnya →' : 'Selesai & Lihat Hasil'}
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('simulator-content').innerHTML = resultHTML;
+        }
+
+        function nextEmail() {
+            currentEmailIndex++;
+            if (currentEmailIndex >= phishingEmails.length) {
+                showFinalResult();
+            } else {
+                displayPhishingEmail();
+            }
+        }
+
+        function showFinalResult() {
+            const accuracy = Math.round((correctAnswers / phishingEmails.length) * 100);
+            let level = '';
+
+            if (accuracy <= 40) {
+                level = '🔴 Pemula - Waspada lebih tinggi terhadap email mencurigakan';
+            } else if (accuracy <= 70) {
+                level = '🟡 Menengah - Terus tingkatkan pemahaman phishing techniques';
+            } else {
+                level = '🟢 Expert - Anda sudah bisa mengenali phishing dengan baik!';
+            }
+
+            const html = `
+                <div class="card text-center">
+                    <div class="card-header">
+                        <h2 class="card-title">Simulasi Selesai! 🎉</h2>
+                    </div>
+
+                    <div class="card-content">
+                        <div class="result-icon">🏆</div>
+                        <div class="result-score">${correctAnswers}/${phishingEmails.length}</div>
+                        <div class="level-badge">Akurasi: ${accuracy}%</div>
+                        <div class="result-description">${level}</div>
+
+                        <div class="results-grid mt-40">
+                            <div class="result-stat">
+                                <div class="result-stat-label">Benar</div>
+                                <div class="result-stat-value">${correctAnswers}</div>
+                            </div>
+                            <div class="result-stat">
+                                <div class="result-stat-label">Salah</div>
+                                <div class="result-stat-value">${phishingEmails.length - correctAnswers}</div>
+                            </div>
+                        </div>
+
+                        <div class="info-box mt-40">
+                            <div class="info-title">💡 Tips Mencegah Phishing</div>
+                            <ul style="margin-left: 20px; margin-top: 12px; line-height: 2;">
+                                <li>Selalu verifikasi domain email dengan hati-hati</li>
+                                <li>Jangan klik link dari email yang mencurigakan</li>
+                                <li>Cek pengirim email dengan cermat</li>
+                                <li>Pergi langsung ke website resmi, jangan melalui email</li>
+                                <li>Gunakan password manager untuk keamanan password</li>
+                                <li>Aktifkan 2FA di akun penting Anda</li>
+                                <li>Laporkan email phishing ke penyedia email</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <button class="btn btn-primary" style="width: 100%;" onclick="location.reload()">
+                            ↻ Ulang Simulasi
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('simulator-content').innerHTML = html;
+        }
+
+        // Start
+        displayPhishingEmail();
+    </script>
 </body>
 </html>
-
