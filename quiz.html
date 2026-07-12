@@ -1,100 +1,346 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<link rel="stylesheet" href="css/style.css">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CyberAware Quiz</title>
-
-<nav>
-
-<div class="logo">
-CyberAware
-</div>
-
-<ul>
-<li><a href="index.html">🏠 Home</a></li>
-<li><a href="quiz.html">📝 Quiz</a></li>
-<li><a href="phishing.html">🎣 Phishing</a></li>
-<li><a href="checker.html">🔐 Password</a></li>
-<li><a href="artikel.html">📚 Artikel</a></li>
-</ul>
-
-</nav>
-
-<style>
-body{
-    font-family:Arial,sans-serif;
-    background:#f4f7fb;
-    padding:20px;
-}
-
-.container{
-    max-width:800px;
-    margin:auto;
-    background:white;
-    padding:30px;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
-}
-
-.progress{
-    width:100%;
-    height:20px;
-    background:#ddd;
-    border-radius:10px;
-    overflow:hidden;
-    margin-bottom:20px;
-}
-
-.progress-bar{
-    height:100%;
-    width:0%;
-    background:#2563eb;
-}
-
-.option{
-    display:block;
-    margin:10px 0;
-    padding:10px;
-    border:1px solid #ddd;
-    border-radius:5px;
-    cursor:pointer;
-}
-
-button{
-    margin-top:20px;
-    padding:10px 20px;
-    border:none;
-    background:#2563eb;
-    color:white;
-    border-radius:5px;
-    cursor:pointer;
-}
-
-#result{
-    text-align:center;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberAware - Quiz</title>
+    <!-- LINK CSS GLOBAL (harus di head) -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
+    <!-- NAVBAR -->
+    <nav>
+        <div class="navbar-wrapper">
+            <a href="index.html" class="navbar-logo">
+                <span>🔐</span>
+                <span class="navbar-logo-text">CyberAware</span>
+            </a>
 
-<div class="container">
+            <button class="navbar-toggle" id="navbarToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
-<h1>Cyber Security Quiz</h1>
+            <ul class="navbar-menu" id="navbarMenu">
+                <li class="navbar-item">
+                    <a href="index.html" class="navbar-link">
+                        <span>🏠</span>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="quiz.html" class="navbar-link active">
+                        <span>📝</span>
+                        <span>Quiz</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="phishing.html" class="navbar-link">
+                        <span>🎣</span>
+                        <span>Phishing</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="checker.html" class="navbar-link">
+                        <span>🔐</span>
+                        <span>Password</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-<div class="progress">
-<div class="progress-bar" id="progressBar"></div>
-</div>
+    <!-- QUIZ CONTAINER -->
+    <div class="container">
+        <div class="card">
+            <div id="quiz-content"></div>
+            <div id="result-content"></div>
+        </div>
+    </div>
 
-<div id="quiz"></div>
+    <!-- NAVBAR TOGGLE SCRIPT -->
+    <script>
+        // Hamburger menu toggle
+        const navbarToggle = document.getElementById('navbarToggle');
+        const navbarMenu = document.getElementById('navbarMenu');
 
-<div id="result"></div>
+        navbarToggle.addEventListener('click', () => {
+            navbarToggle.classList.toggle('active');
+            navbarMenu.classList.toggle('active');
+        });
 
-</div>
+        document.querySelectorAll('.navbar-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navbarToggle.classList.remove('active');
+                navbarMenu.classList.remove('active');
+            });
+        });
 
-<script src="js/quiz.js"></script>
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('nav')) {
+                navbarToggle.classList.remove('active');
+                navbarMenu.classList.remove('active');
+            }
+        });
+    </script>
 
+    <!-- QUIZ LOGIC -->
+    <script>
+        const questionBank = [
+            {
+                question: "Apa tujuan utama phishing?",
+                options: ["Mencuri data", "Mempercepat internet", "Menghapus virus", "Membuat akun"],
+                answer: 0,
+                difficulty: "Mudah"
+            },
+            {
+                question: "Apa fungsi 2FA (Two-Factor Authentication)?",
+                options: ["Menambah keamanan", "Menghapus password", "Menginstal antivirus", "Mempercepat login"],
+                answer: 0,
+                difficulty: "Mudah"
+            },
+            {
+                question: "Apa itu malware?",
+                options: ["Program berbahaya", "Browser", "Antivirus", "Firewall"],
+                answer: 0,
+                difficulty: "Mudah"
+            },
+            {
+                question: "Password paling kuat adalah?",
+                options: ["123456", "password", "Budi123", "M@h4sisw@2025!"],
+                answer: 3,
+                difficulty: "Sedang"
+            },
+            {
+                question: "HTTPS menandakan?",
+                options: ["Website lebih aman", "Website offline", "Website lambat", "Website rusak"],
+                answer: 0,
+                difficulty: "Mudah"
+            },
+            {
+                question: "WiFi publik berisiko karena?",
+                options: ["Bisa disadap", "Lebih cepat", "Gratis", "Tidak aman untuk game"],
+                answer: 0,
+                difficulty: "Mudah"
+            },
+            {
+                question: "Apa itu ransomware?",
+                options: ["Virus penyandera data", "Browser", "Firewall", "VPN"],
+                answer: 0,
+                difficulty: "Sedang"
+            },
+            {
+                question: "Data pribadi yang paling sensitif?",
+                options: ["Nomor KTP", "Nama Kota", "Nama Jalan", "Kode Pos"],
+                answer: 0,
+                difficulty: "Sedang"
+            },
+            {
+                question: "Kapan password harus diganti?",
+                options: ["Jika bocor", "10 tahun sekali", "Tidak perlu", "Saat beli HP"],
+                answer: 0,
+                difficulty: "Mudah"
+            },
+            {
+                question: "Apa fungsi utama antivirus?",
+                options: ["Mendeteksi ancaman", "Mempercepat internet", "Menghapus akun", "Mengunci file"],
+                answer: 0,
+                difficulty: "Mudah"
+            },
+            {
+                question: "VPN digunakan untuk?",
+                options: ["Melindungi koneksi", "Menambah RAM", "Menghapus malware", "Mengganti browser"],
+                answer: 0,
+                difficulty: "Sedang"
+            },
+            {
+                question: "Social engineering adalah?",
+                options: ["Manipulasi manusia", "Virus", "Firewall", "Software"],
+                answer: 0,
+                difficulty: "Sedang"
+            },
+            {
+                question: "Apa yang harus dilakukan pada email mencurigakan?",
+                options: ["Verifikasi pengirim", "Klik link", "Forward", "Balas"],
+                answer: 0,
+                difficulty: "Mudah"
+            },
+            {
+                question: "Backup data berguna untuk?",
+                options: ["Mencegah kehilangan data", "Mempercepat PC", "Menghapus virus", "Menambah storage"],
+                answer: 0,
+                difficulty: "Mudah"
+            },
+            {
+                question: "Ciri website phishing?",
+                options: ["Domain mencurigakan", "HTTPS", "Logo jelas", "Alamat resmi"],
+                answer: 0,
+                difficulty: "Sedang"
+            }
+        ];
+
+        let questions = [];
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        function shuffle(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
+
+        function startQuiz() {
+            questions = shuffle([...questionBank])
+                .slice(0, 10)
+                .map(q => shuffleOptions(q));
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            showQuestion();
+        }
+
+        function shuffleOptions(question) {
+            const options = [...question.options];
+            const correctAnswer = question.options[question.answer];
+            options.sort(() => Math.random() - 0.5);
+            const newAnswer = options.indexOf(correctAnswer);
+            return {
+                ...question,
+                options: options,
+                answer: newAnswer
+            };
+        }
+
+        function showQuestion() {
+            answered = false;
+            const q = questions[currentQuestion];
+            const progress = ((currentQuestion) / 10) * 100;
+
+            const html = `
+                <div class="progress-section">
+                    <div class="progress-info">
+                        <div class="question-counter">Pertanyaan ${currentQuestion + 1} dari 10</div>
+                        <div class="progress-percent">${Math.round(progress)}%</div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: ${progress}%"></div>
+                    </div>
+                </div>
+
+                <div class="question-section">
+                    <div class="question-number">Soal ${currentQuestion + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                </div>
+
+                <div class="options">
+                    ${q.options.map((opt, index) => `
+                        <div class="option" onclick="checkAnswer(${index})" id="option-${index}">
+                            <span class="option-icon">${String.fromCharCode(65 + index)}</span>
+                            ${opt}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            document.getElementById('quiz-content').innerHTML = html;
+            document.getElementById('result-content').innerHTML = '';
+        }
+
+        function checkAnswer(selected) {
+            if (answered) return;
+            answered = true;
+
+            const optionElement = document.getElementById(`option-${selected}`);
+            const correctAnswer = questions[currentQuestion].answer;
+
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.add('disabled');
+            });
+
+            if (selected === correctAnswer) {
+                score++;
+                optionElement.classList.add('correct');
+            } else {
+                optionElement.classList.add('incorrect');
+                document.getElementById(`option-${correctAnswer}`).classList.add('correct');
+            }
+
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < 10) {
+                    showQuestion();
+                } else {
+                    showResult();
+                }
+            }, 1500);
+        }
+
+        function getLevel() {
+            if (score <= 3) {
+                return {
+                    icon: '🔴',
+                    title: 'Newbie',
+                    description: 'Anda baru memulai perjalanan keamanan cyber. Terus belajar dan tingkatkan kesadaran!'
+                };
+            } else if (score <= 6) {
+                return {
+                    icon: '🟡',
+                    title: 'Digital Explorer',
+                    description: 'Anda mulai memahami dasar keamanan cyber. Terus kembangkan pengetahuan Anda!'
+                };
+            } else if (score <= 8) {
+                return {
+                    icon: '🟢',
+                    title: 'Security Defender',
+                    description: 'Anda memiliki pemahaman yang solid tentang keamanan cyber. Pertahankan posisi ini!'
+                };
+            } else {
+                return {
+                    icon: '🏆',
+                    title: 'Cyber Guardian',
+                    description: 'Anda adalah ahli keamanan cyber! Berbagi pengetahuan Anda dengan orang lain.'
+                };
+            }
+        }
+
+        function showResult() {
+            const level = getLevel();
+            const accuracy = Math.round((score / 10) * 100);
+
+            const html = `
+                <div class="result-container">
+                    <div class="result-icon">${level.icon}</div>
+                    <div class="result-title">Quiz Selesai!</div>
+                    <div class="result-score">${score}/10</div>
+                    <div class="result-level">${level.title}</div>
+                    <div class="level-badge">Akurasi: ${accuracy}%</div>
+                    <div class="result-description">${level.description}</div>
+
+                    <div class="results-grid">
+                        <div class="result-stat">
+                            <div class="result-stat-label">Benar</div>
+                            <div class="result-stat-value">${score}</div>
+                        </div>
+                        <div class="result-stat">
+                            <div class="result-stat-label">Salah</div>
+                            <div class="result-stat-value">${10 - score}</div>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-primary" onclick="startQuiz()">
+                            ↻ Ulangi Quiz
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('result-content').innerHTML = html;
+            document.getElementById('quiz-content').innerHTML = '';
+        }
+
+        // Start quiz when page loads
+        startQuiz();
+    </script>
 </body>
 </html>
